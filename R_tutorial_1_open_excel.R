@@ -69,11 +69,20 @@ data2use <- do.call(rbind,data2use)
 ### Example of convering data in 'wide format' to 'long format' ###
 ###################################################################
 
-# library(dplyr)
+load("wide_data_ex") #type the file path here
+
+wide_data_ex #print the data so we can look at it 
+
+long_DF <- gather(wide_data_ex, Quarter, Revenue, Qtr.1:Qtr.4) #gather(data, key, value, columns to use)
+
+
 # spread function
+wide_DF <- spread(long_DF, Quarter, Revenue)
 
+
+###################################################################
 ### Example of Analysis ###
-
+###################################################################
 library(lmerTest)
 RT_model <- lmer(RT ~ Condition + (1|Subject_ID), data = data2use)
 anova(RT_model)
