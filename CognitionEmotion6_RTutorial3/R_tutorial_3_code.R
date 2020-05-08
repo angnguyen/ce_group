@@ -1,3 +1,5 @@
+options(scipen = 999)
+
 library(openxlsx)
 library(ez)
 library(emmeans)
@@ -39,12 +41,18 @@ t.test(RT ~ condition, data=subset(my_data, condition %in% c("control", "conditi
 ############################# HOW TO RUN ANOVA #################################################
 ################################################################################################
 
-ANOVA <- ezANOVA(data = my_data, dv = .(RT), wid = .(subject_id), within = .(condition), return_aov = TRUE) #RT differs between conditions. Return_aov must be called to run pairwise comparisons
+ANOVA <- ezANOVA(data = my_data, 
+                 dv = .(RT), 
+                 wid = .(subject_id), 
+                 within = .(condition), 
+                 return_aov = TRUE) #RT differs between conditions. Return_aov must be called to run pairwise comparisons
 ANOVA #Print it to look at it
 
-posthoc <- emmeans(ANOVA$aov, list(pairwise ~ condition), adjust = "tukey") #Pairwise comparisons of our anova object with tukey correction
+options(contrasts = c("contr.sum", "contr.poly")) #set orthogonal contrasts
+posthoc <- emmeans(ANOVA$aov, ~ condition, adjust = "tukey") #Pairwise comparisons of our anova object with tukey correction
 posthoc #Print it to look at it
 
+effSize <- r2beta(ANOVA$aov, method = 'kr') 
 
 ################################################################################################
 ########################## HOW TO TEST CORRELATIONS ############################################
