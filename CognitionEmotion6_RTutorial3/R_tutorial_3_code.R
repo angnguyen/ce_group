@@ -22,9 +22,9 @@ t.test(RT ~ gender, data = my_data) #There is no difference, lets try something 
 
 
 ##### Subsetting different conditions in our data (Method 1) #####
-Control <- subset(my_data, condition == "control") #Crearing object with control data
+Control <- subset(my_data, condition == "control") #Crearting variable with control data
 Control #Print it so we can see what it looks like
-Cond1 <- subset(my_data, condition == "condition_1") #Crearing object with condition_1 data
+Cond1 <- subset(my_data, condition == "condition_1") #Creating var with condition_1 data
 Cond1 #Print it so we can see what it looks like
 
 t.test(Control$RT, Cond1$RT, paired = TRUE) #The control condition and condition_1 differ
@@ -41,6 +41,8 @@ t.test(RT ~ condition, data=subset(my_data, condition %in% c("control", "conditi
 ############################# HOW TO RUN ANOVA #################################################
 ################################################################################################
 
+options(contrasts = c("contr.sum", "contr.poly")) #set orthogonal contrasts
+
 ANOVA <- ezANOVA(data = my_data, 
                  dv = .(RT), 
                  wid = .(subject_id), 
@@ -48,11 +50,9 @@ ANOVA <- ezANOVA(data = my_data,
                  return_aov = TRUE) #RT differs between conditions. Return_aov must be called to run pairwise comparisons
 ANOVA #Print it to look at it
 
-options(contrasts = c("contr.sum", "contr.poly")) #set orthogonal contrasts
 posthoc <- emmeans(ANOVA$aov, ~ condition, adjust = "tukey") #Pairwise comparisons of our anova object with tukey correction
 posthoc #Print it to look at it
 
-effSize <- r2beta(ANOVA$aov, method = 'kr') 
 
 ################################################################################################
 ########################## HOW TO TEST CORRELATIONS ############################################
