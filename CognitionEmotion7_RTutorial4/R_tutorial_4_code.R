@@ -79,10 +79,21 @@ ggplot(data = dataRT, aes(x = age, y = RT)) +
   geom_smooth(method = lm)
 
 #Change shape, colour by grouping variable
-scatterP <- ggplot(data = dataRT, aes(x = age, y = RT, shape = group, colour = group)) +
+ggplot(data = dataRT, aes(x = age, y = RT, shape = group, colour = group)) +
   geom_point() +
   geom_smooth(method = lm, se = FALSE)
+
+#Final scatterplot
+scatterP <- ggplot(data = dataRT, aes(x = age, y = RT, shape = group, colour = group)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)+
+  labs(x = "Age", y = "Reaction Time (ms)")+
+  scale_color_hue(labels = c("Group 1", "Group 2"), name = "Group")+
+  scale_shape_manual(labels = c("Group 1", "Group 2"), name = "Group", values = c("circle", "triangle"))+
+  theme_classic()+
+  theme(legend.position = c(.8, .25))
 scatterP
+
 
 #Simple box plot
 ggplot(data = my_data, aes(x = condition, y = RT)) +
