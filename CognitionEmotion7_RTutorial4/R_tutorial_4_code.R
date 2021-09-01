@@ -66,6 +66,7 @@ barP <- ggplot(data = summary, aes(x = condition, y = RT, fill = condition)) +
 barP
 
 #Load another set of data
+setwd(data_folder)
 load("dataRT")
 dataRT
 

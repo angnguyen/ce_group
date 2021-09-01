@@ -91,9 +91,10 @@ library(openxlsx)
 data_folder <- "E:/Cognition_emotion_group_2020/R_tutorial_1/data_is_here/"
 data_file <- "gather_example_data.xlsx"
 full_path <- paste0(data_folder,data_file)
+full_path <- "/Users/aaronmcinnes/ODcurtin/Git/ce_group/CognitionEmotion2_RTutorial1/data_is_here/gather_example_data.xlsx"
 
 data2use <- read.xlsx(full_path)
-View(data2use)
+data2use
 
 data2use_v2 <- gather(data = data2use, key = "condition", value = "RT", c("RT_control","RT_condition_1", "RT_condition_2"))  # gather
 View(data2use_v2)
@@ -123,7 +124,8 @@ write.xlsx(data2use_v3,full_path)
 ####################################
 ### Another Wide to Long Example ###
 ####################################
-load("wide_data_ex") #type the file path here
+
+load("/Users/aaronmcinnes/ODcurtin/Git/ce_group/CognitionEmotion2_RTutorial1/data_is_here/wide_data_ex") #type the file path here
 wide_data_ex #print the data so we can look at it 
 # gather function
 long_DF <- gather(wide_data_ex, Quarter, Revenue, Qtr.1:Qtr.4) #gather(data, key, value, columns to use)
